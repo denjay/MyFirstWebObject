@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block user %}
+	<div class="navbar_con">
+		<div class="navbar clearfix">
+			<div class="subnav_con fl">
+				<h1>全部商品分类</h1>	
+				<span></span>			
+				<ul class="subnav">
+					<li><a href="#" class="fruit">新鲜水果</a></li>
+					<li><a href="#" class="seafood">海鲜水产</a></li>
+					<li><a href="#" class="meet">猪牛羊肉</a></li>
+					<li><a href="#" class="egg">禽类蛋品</a></li>
+					<li><a href="#" class="vegetables">新鲜蔬菜</a></li>
+					<li><a href="#" class="ice">速冻食品</a></li>
+				</ul>
+			</div>
+			<ul class="navlist fl">
+				<li><a href="">首页</a></li>
+				<li class="interval">|</li>
+				<li><a href="">手机生鲜</a></li>
+				<li class="interval">|</li>
+				<li><a href="">抽奖</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="breadcrumb">
+		<a href="#">全部分类</a>
+		<span>></span>
+		<a href="#">新鲜水果</a>
+	</div>
+
+	<div class="main_wrap clearfix">
+		<div class="l_wrap fl clearfix">
+			<div class="new_goods">
+				<h3>新品推荐</h3>
+				<ul>
+					<li>
+						<a href="#"><img src="/static/images/goods/goods001.jpg"></a>
+						<h4><a href="#">进口柠檬</a></h4>
+						<div class="prize">￥3.90</div>
+					</li>
+					<li>
+						<a href="#"><img src="/static/images/goods/goods002.jpg"></a>
+						<h4><a href="#">玫瑰香葡萄</a></h4>
+						<div class="prize">￥16.80</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="r_wrap fr clearfix">
+			<div class="sort_bar">
+				<a href="#" class="active">默认</a>
+				<a href="#">价格</a>
+				<a href="#">人气</a>
+			</div>
+
+			<ul class="goods_type_list clearfix">
+				{% for item in goods.object_list %}
+					<li>
+						<a href="/goods/{{ item.id }}/"><img src="/static/{{ item.gpic }}"></a>
+						<h4><a href="/goods/{{ item.id }}/">{{ item.gtitle }}</a></h4>
+						<div class="operate">
+							<span class="prize">￥{{ item.gprice }}</span>
+							<span class="unit">{{ item.gprice }}/{{ item.gunit }}</span>
+							<a href="#" class="add_goods" title="加入购物车"></a>
+						</div>
+					</li>
+				{% endfor %}
+			</ul>
+
+			<div class="pagenation">
+				{% if goods.has_previous %}
+					<a href="/goods/list_{{ id }}_{{ goods.number | add:'-1'}}">上一页</a>
+				{% else %}
+					<a href="javascript:;">上一页</a>
+				{% endif %}
+
+				{% for n in page_range %}
+					{% if n == goods.number %}
+						<a href="javascript:;" class="active">{{ n }}</a>
+					{% else %}
+						<a href="/goods/list_{{ id }}_{{ n }}">{{ n }}</a>
+					{% endif %}
+				{% endfor %}
+
+				{% if goods.has_next %}
+					<a href="/goods/list_{{ id }}_{{ goods.number | add:'1'}}">下一页</a>
+				{% else %}
+					<a href="javascript:;">下一页</a>
+				{% endif %}
+
+			</div>
+		</div>
+	</div>
+
+{% endblock user %}
